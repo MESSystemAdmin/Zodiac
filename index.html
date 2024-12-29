@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zodiac Comparison</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f5e1e1, #b5c7d6);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #4a90e2;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #f8f8f8;
+        }
+        button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #4a90e2;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            opacity: 0.6;
+        }
+        button:disabled {
+            background-color: #d3d3d3;
+        }
+        p {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+        
+        /* Modal Styles */
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+            padding-top: 60px;
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 8px;
+        }
+
+        /* Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Zodiac Comparison</h1>
+        
+        <label for="zodiac1">Select First Zodiac Sign</label>
+        <select id="zodiac1">
+            <option value="">--Select--</option>
+            <option value="Aries">Aries</option>
+            <option value="Taurus">Taurus</option>
+            <option value="Gemini">Gemini</option>
+            <option value="Cancer">Cancer</option>
+            <option value="Leo">Leo</option>
+            <option value="Virgo">Virgo</option>
+            <option value="Libra">Libra</option>
+            <option value="Scorpio">Scorpio</option>
+            <option value="Sagittarius">Sagittarius</option>
+            <option value="Capricorn">Capricorn</option>
+            <option value="Aquarius">Aquarius</option>
+            <option value="Pisces">Pisces</option>
+        </select>
+
+        <label for="zodiac2">Select Second Zodiac Sign</label>
+        <select id="zodiac2">
+            <option value="">--Select--</option>
+            <option value="Aries">Aries</option>
+            <option value="Taurus">Taurus</option>
+            <option value="Gemini">Gemini</option>
+            <option value="Cancer">Cancer</option>
+            <option value="Leo">Leo</option>
+            <option value="Virgo">Virgo</option>
+            <option value="Libra">Libra</option>
+            <option value="Scorpio">Scorpio</option>
+            <option value="Sagittarius">Sagittarius</option>
+            <option value="Capricorn">Capricorn</option>
+            <option value="Aquarius">Aquarius</option>
+            <option value="Pisces">Pisces</option>
+        </select>
+
+        <button id="submitBtn" >Submit</button>
+    </div>
+
+    <!-- The Modal -->
+    <div id="resultModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Zodiac Comparison Result</h2>
+            <p id="result"></p>
+        </div>
+    </div>
+
+    <script>
+        const zodiac1 = document.getElementById('zodiac1');
+        const zodiac2 = document.getElementById('zodiac2');
+        const submitBtn = document.getElementById('submitBtn');
+        const result = document.getElementById('result');
+        const modal = document.getElementById('resultModal');
+        const closeModal = document.getElementsByClassName('close')[0];
+
+        // Function to check if both selected zodiacs include "Pisces" or "Virgo"
+        function checkSelection() {
+            const validZodiacs = ['Pisces', 'Virgo'];
+
+            // Check if the combination includes Pisces and Virgo (in any order)
+            if ((validZodiacs.includes(zodiac1.value) && validZodiacs.includes(zodiac2.value)) && (zodiac1.value !== zodiac2.value)) {
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.disabled = true;
+            }
+        }
+
+        // Event listeners for dropdowns
+        //zodiac1.addEventListener('change', checkSelection);
+        //zodiac2.addEventListener('change', checkSelection);
+
+        // Function to display comparison result in the modal
+        function displayResult() {
+            const sign1 = zodiac1.value;
+            const sign2 = zodiac2.value;
+            
+            if (sign1 && sign2) {
+                // Display the selected signs with a line break after the full stop
+                result.innerHTML = `You selected ${sign1} and ${sign2}.<br>Zodiac compatibility and comparison details go here!<br><strong>Hard-Working</strong><br><br>
+Virgos know that hard work pays off. They aren't afraid to throw themselves into a project, no matter what it takes, and may even go some sleepless nights.
+
+ 
+<br><br>
+<strong>Creative</strong><br>
+Virgos throw themselves into their creativity as much as their other passions. Their creativity is always flowing and they use mediums like art, dance, and writing as an outlet.
+
+ 
+<br><br>
+<strong>Reliable</strong><br>
+You'll be hard-pressed to find someone more responsible and reliable than a Virgo. When left in charge, Virgos are sure to take their responsibilities seriously, and they'll always show up when you need them to.
+
+ 
+<br><br>
+<strong>Patient</strong><br>
+While no one is infinitely patient, Virgos are more patient than others. They're always willing to see the best in people, and are willing to give people time when they need it to shape up their act.
+
+ 
+<br><br>
+<strong>Kind</strong><br>
+Virgos are also humble and affectionate. Along with their desire to see the best in people, they are unfailingly kind and are always willing to help others.
+<br><br>
+<strong>Virgo Females are the Best Person!`;
+                modal.style.display = "block"; // Show the modal
+            }
+        }
+
+        // Event listener for the submit button
+        submitBtn.addEventListener('click', function() {
+            const sign1 = zodiac1.value;
+            const sign2 = zodiac2.value;
+
+            // Check for valid combination of Pisces and Virgo
+            if ((sign1 === 'Pisces' && sign2 === 'Virgo') || (sign1 === 'Virgo' && sign2 === 'Pisces')) {
+                displayResult(); // Display the result if the combination is correct
+            } else {
+                alert("Please select either Pisces and Virgo as your zodiac signs.");
+                zodiac1.value = '';
+                zodiac2.value = '';
+                submitBtn.disabled = true;
+            }
+        });
+
+        // Close the modal when the user clicks on the close button (×)
+        closeModal.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Close the modal when the user clicks anywhere outside of the modal
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+    
+</body>
+</html>
